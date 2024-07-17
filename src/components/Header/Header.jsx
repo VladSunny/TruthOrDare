@@ -16,7 +16,7 @@ function Header() {
                     </IconButton>
                 </div>
             )}
-            <p className="text-2xl md:text-4xl lg:text-5xl font-extrabold md:ml-5">Генератор правд и действий</p>
+            <p className="text-2xl md:text-4xl lg:text-5xl font-extrabold ml-5">Генератор правд и действий</p>
         </div>
     );
 }

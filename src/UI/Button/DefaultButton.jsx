@@ -14,7 +14,7 @@ const EditedButton = styled(Button)({
 
 function DefaultButton(props) {
     return (
-        <EditedButton variant="contained" className={props.className} href={props.href}>
+        <EditedButton variant="contained" className={props.className} href={props.href} color={props.color}>
             {props.children}
         </EditedButton>
     );
