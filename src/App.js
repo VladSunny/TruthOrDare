@@ -8,6 +8,7 @@ import '@fontsource/roboto/700.css';
 import './styles/colors.css';
 
 import Welcome from './pages/Welcome';
+import Game from './pages/Game';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
@@ -17,6 +18,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Welcome />} />
+        <Route path="/Game" element={<Game />} />
       </Routes>
       <Footer />
     </Fragment>
