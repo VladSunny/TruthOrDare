@@ -7,7 +7,8 @@ const EditedButton = styled(Button)({
     backgroundColor: '#8A84E2',
     '&:hover': {
         backgroundColor: '#84AFE6'
-    }
+    },
+    boxShadow: '0px 4px 20px rgba(138, 132, 226, 0.25)',
 });
 
 
