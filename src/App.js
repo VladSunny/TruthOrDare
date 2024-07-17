@@ -1,17 +1,22 @@
-import React from 'react';
+import { Fragment } from 'react';
+import { Routes, Route } from 'react-router-dom';
+
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import './styles/colors.css';
 
-import Button from '@mui/material/Button';
+import Welcome from './pages/Welcome';
 
 function App() {
   return (
-    <div className='flex flex-col items-center justify-center'>
-      <h1>Hello, world!</h1>
-      <Button variant="contained">Contained</Button>
-    </div>
+    // <Fragment>
+    //   <Routes>
+    //     <Route exact path="/" element={<Welcome />} />
+    //   </Routes>
+    // </Fragment>
+    <Welcome />
   );
 }
 
