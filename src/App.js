@@ -11,12 +11,12 @@ import Welcome from './pages/Welcome';
 
 function App() {
   return (
-    // <Fragment>
-    //   <Routes>
-    //     <Route exact path="/" element={<Welcome />} />
-    //   </Routes>
-    // </Fragment>
-    <Welcome />
+    <Fragment>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+      </Routes>
+    </Fragment>
+    // <Welcome />
   );
 }
 
