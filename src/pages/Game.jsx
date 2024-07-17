@@ -46,7 +46,7 @@ function Game() {
         settings.completionOptions.temperature = temperature;
         settings.messages.push({ role: "user", text: prompt });
 
-        axios.post(url, prompt, { headers })
+        axios.post(url, settings, { headers })
         .then(response => {
             console.log(response.data);
         })
