@@ -16,7 +16,6 @@ const useWindowSize = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Убираем обработчик при размонтировании компонента
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
