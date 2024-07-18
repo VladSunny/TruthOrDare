@@ -25,25 +25,26 @@ function Game() {
         ]
     }
 
-    const url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion";
-    const headers = {
-        "Content-Type": "application/json",
-        "Authorization": "Api-Key AQVNxR6zGEOE6NwZxLzAg__WTaw2R788WOjcY1Dk"
-    };
+    // const url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion";
+    // const headers = {
+    //     "Content-Type": "application/json",
+    //     "Authorization": "Api-Key AQVNxR6zGEOE6NwZxLzAg__WTaw2R788WOjcY1Dk"
+    // };
 
     const onSubmit = () => {
         console.log(temperature, prompt, isDare);
 
         settings.completionOptions.temperature = temperature;
+        settings.messages = [];
         settings.messages.push({ role: "user", text: prompt });
 
-        axios.post(url, settings, { headers })
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        axios.post('http://localhost:3001/api/completion', settings)
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
     return (
