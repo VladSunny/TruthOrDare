@@ -22,21 +22,12 @@ function Game() {
             maxTokens: "2000"
         },
         messages: [
-            // {
-            //     role: "system",
-            //     text: "Твоя задача оценить схожесть обобщенных смыслов двух текстов.\n\n" +
-            //         "Тебе будут присылать два текста, в ответ ты можешь написать - \n" +
-            //         "1. ДА (тексты схожи по общему смыслу)\n" +
-            //         "2. НЕТ (тексты не схожи по общему смыслу)\n\n" +
-            //         "Судить схожесть текстов нужно судить не слишком строго.\n" +
-            //         "Самое главное - обращать внимание на важные моменты в первом тексте, если во втором их не будет, то тексты не схожи по общему смыслу."
-            // },
         ]
     }
 
     const url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion";
     const headers = {
-        "Content-Type": "application/json",
+        "Content-Type": "text/plain",
         "Authorization": "Api-Key AQVNxR6zGEOE6NwZxLzAg__WTaw2R788WOjcY1Dk"
     };
 
@@ -46,7 +37,7 @@ function Game() {
         settings.completionOptions.temperature = temperature;
         settings.messages.push({ role: "user", text: prompt });
 
-        axios.post(url, settings, { headers })
+        axios.post(url, JSON.stringify(settings), { headers: { headers } })
         .then(response => {
             console.log(response.data);
         })
@@ -60,7 +51,8 @@ function Game() {
             <h1 className='text-3xl md:text-4xl lg:text-6xl w-11/12 md:w-2/3 py-10 variantfill-two p-5 mt-5 rounded-2xl flex justify-center shadow-lg'>
                 Правда или действие?
             </h1>
-            <div className='mt-10 w-full flex flex-col justify-center items-center gap-10'>
+            <div className='mt-10 w-11/12 py-10 variantfill-one shadow-md rounded-3xl flex flex-col justify-center items-center gap-10'>
+                <h1 className='text-2xl'>Настройки</h1>
                 <TextField
                     id="standard-multiline-flexible"
                     label="Ваше пожелание"
