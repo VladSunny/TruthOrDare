@@ -9,6 +9,7 @@ import './styles/colors.css';
 
 import Welcome from './pages/Welcome';
 import Game from './pages/Game';
+import Information from './pages/Information';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
@@ -18,6 +19,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Welcome />} />
+        <Route path="/Information" element={<Information />} />
         <Route path="/Game" element={<Game />} />
       </Routes>
       <Footer />

@@ -13,8 +13,8 @@ function Welcome() {
                         Начать
                     </p>
                 </DefaultButton>
-                <DefaultButton className="w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3">
-                    <p className='text-4xl md:text-5xl'>
+                <DefaultButton className="w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3" href='/Information'>
+                    <p className='text-2xl md:text-4xl lg:text-5xl'>
                         Подробнее о игре
                     </p>
                 </DefaultButton>

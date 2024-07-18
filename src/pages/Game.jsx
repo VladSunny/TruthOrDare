@@ -27,7 +27,7 @@ function Game() {
 
     const url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion";
     const headers = {
-        "Content-Type": "text/plain",
+        "Content-Type": "application/json",
         "Authorization": "Api-Key AQVNxR6zGEOE6NwZxLzAg__WTaw2R788WOjcY1Dk"
     };
 
@@ -37,13 +37,13 @@ function Game() {
         settings.completionOptions.temperature = temperature;
         settings.messages.push({ role: "user", text: prompt });
 
-        axios.post(url, JSON.stringify(settings), { headers: { headers } })
-        .then(response => {
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        axios.post(url, settings, { headers })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     return (
