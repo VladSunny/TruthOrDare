@@ -13,13 +13,17 @@ function Game() {
     const [temperature, setTemperature] = React.useState(0.5);
     const [prompt, setPrompt] = React.useState('');
     const [isDare, setIsDare] = React.useState(false);
+    const [result, setResult] = React.useState('');
+
+    const darePrompt = "Твоя задача сгенерировать интересное задание в виде действия, учитывая пожелания пользовтеля";
+    const truthPrompt = "Твоя задача сгенерировать интересный вопрос, учитывая пожелания пользователя"
 
     const settings = {
-        modelUri: "gpt://b1gfks0khjkqtiosesft/yandexgpt-lite",
+        modelUri: "gpt://b1gfks0khjkqtiosesft/yandexgpt/latest",
         completionOptions: {
             stream: false,
             temperature: 0,
-            maxTokens: "2000"
+            maxTokens: "1000"
         },
         messages: [
         ]
@@ -36,11 +40,21 @@ function Game() {
 
         settings.completionOptions.temperature = temperature;
         settings.messages = [];
-        settings.messages.push({ role: "user", text: prompt });
+
+        if (isDare) {
+            settings.messages.push({ role: "user", text: darePrompt });
+        } else {
+            settings.messages.push({ role: "user", text: truthPrompt });
+        }
+
+        if (prompt) settings.messages.push({ role: "user", text: prompt });
+        else settings.messages.push({ role: "user", text: "Особых пожеланий нет" });
 
         axios.post('http://localhost:3001/api/completion', settings)
         .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
+            console.log(response.data.result.alternatives[0].message.text);
+            setResult(response.data.result.alternatives[0].message.text);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -48,7 +62,7 @@ function Game() {
     }
 
     return (
-        <div className='h-screen variantfill-four flex flex-col items-center'>
+        <div className='h-fit variantfill-four flex flex-col items-center'>
             <h1 className='text-3xl md:text-4xl lg:text-6xl w-11/12 md:w-2/3 py-10 variantfill-two p-5 mt-5 rounded-2xl flex justify-center shadow-lg'>
                 Правда или действие?
             </h1>
@@ -91,6 +105,12 @@ function Game() {
             </div>
             <div className='mt-10'>
                 <Button color="success" variant='contained' onClick={onSubmit}>сгенерировать</Button>
+            </div>
+            <div className='variantfill-three rounded-3xl w-11/12 my-10 p-5 flex items-center justify-center flex-col'>
+                <h1 className='text-3xl font-extrabold'>Ответ</h1>
+                <p className='mt-10 text-2xl'>
+                    {result}
+                </p>
             </div>
         </div>
     );
