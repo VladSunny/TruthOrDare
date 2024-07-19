@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultButton from '../UI/Button/DefaultButton';
+import { Link } from 'react-router-dom';
 
 function Welcome() {
     return (
@@ -8,16 +9,20 @@ function Welcome() {
                 <h1 className='text-3xl md:text-5xl lg:text-6xl'>Добро пожаловать!</h1>
             </div>
             <div className='w-full h-full flex flex-col mt-14 items-center gap-10'>
-                <DefaultButton className="w-3/4 md:w-2/3 lg:w-3/5 h-1/4 md:h-2/5" href='/Game'>
-                    <p className='text-6xl'>
-                        Начать
-                    </p>
-                </DefaultButton>
-                <DefaultButton className="w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3" href='/Information'>
-                    <p className='text-2xl md:text-4xl lg:text-5xl'>
-                        Подробнее о игре
-                    </p>
-                </DefaultButton>
+                <Link to="/Game" className="w-3/4 md:w-2/3 lg:w-3/5 h-1/4 md:h-2/5">
+                    <DefaultButton className="w-full h-full" href='/Game'>
+                        <p className='text-6xl'>
+                            Начать
+                        </p>
+                    </DefaultButton>
+                </Link>
+                <Link to="/Information" className='w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3 flex justify-center items-center'>
+                    <DefaultButton className="w-full h-full">
+                        <p className='text-2xl md:text-4xl lg:text-5xl'>
+                            Подробнее о игре
+                        </p>
+                    </DefaultButton>
+                </Link>
             </div>
         </div>
     );

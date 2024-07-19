@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 function Game() {
@@ -14,8 +15,9 @@ function Game() {
     const [prompt, setPrompt] = React.useState('');
     const [isDare, setIsDare] = React.useState(false);
     const [result, setResult] = React.useState('');
+    const [isLoading, setIsLoading] = React.useState(false);
 
-    const darePrompt = "Твоя задача сгенерировать интересное задание в виде действия, учитывая пожелания пользовтеля";
+    const darePrompt = "Твоя задача сгенерировать интересное не долгое задание в виде действия, учитывая пожелания пользовтеля";
     const truthPrompt = "Твоя задача сгенерировать интересный вопрос, учитывая пожелания пользователя"
 
     const settings = {
@@ -37,6 +39,7 @@ function Game() {
 
     const onSubmit = () => {
         console.log(temperature, prompt, isDare);
+        setIsLoading(true);
 
         settings.completionOptions.temperature = temperature;
         settings.messages = [];
@@ -55,6 +58,7 @@ function Game() {
             // console.log(response.data);
             console.log(response.data.result.alternatives[0].message.text);
             setResult(response.data.result.alternatives[0].message.text);
+            setIsLoading(false);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -108,9 +112,18 @@ function Game() {
             </div>
             <div className='variantfill-three rounded-3xl w-11/12 my-10 p-5 flex items-center justify-center flex-col'>
                 <h1 className='text-3xl font-extrabold'>Ответ</h1>
-                <p className='mt-10 text-2xl'>
-                    {result}
-                </p>
+                <div className='mt-10'>
+                    {isLoading && (
+                        <div className='text-2xl'>
+                            <CircularProgress />
+                        </div>
+                    )}
+                    {!isLoading && (
+                        <div className='text-2xl'>
+                            {result}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
