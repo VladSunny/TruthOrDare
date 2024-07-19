@@ -53,16 +53,30 @@ function Game() {
         if (prompt) settings.messages.push({ role: "user", text: prompt });
         else settings.messages.push({ role: "user", text: "Особых пожеланий нет" });
 
-        axios.post('http://localhost:3001/api/completion', settings)
-        .then(response => {
-            // console.log(response.data);
-            console.log(response.data.result.alternatives[0].message.text);
-            setResult(response.data.result.alternatives[0].message.text);
+        fetchCompletion();
+    }
+
+    async function fetchCompletion() {
+        setIsLoading(true);
+        try {
+            // Попытка запроса к локальному серверу
+            const localResponse = await axios.post('http://localhost:3001/api/completion', settings);
+            console.log(localResponse.data.result.alternatives[0].message.text);
+            setResult(localResponse.data.result.alternatives[0].message.text);
+        } catch (localError) {
+            console.error('Error with local server:', localError);
+
+            try {
+                // Если запрос к локальному серверу не удался, делаем запрос к серверу Netlify
+                const netlifyResponse = await axios.post('/.netlify/functions/server', settings);
+                console.log(netlifyResponse.data.result.alternatives[0].message.text);
+                setResult(netlifyResponse.data.result.alternatives[0].message.text);
+            } catch (netlifyError) {
+                console.error('Error with Netlify function:', netlifyError);
+            }
+        } finally {
             setIsLoading(false);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        }
     }
 
     return (
