@@ -2,7 +2,7 @@ import React from "react";
 
 function Information() {
     return (
-        <div className="w-screen h-fit variantfill-four flex flex-col items-center">
+        <div className="w-fit h-fit variantfill-four flex flex-col items-center">
             <div className="w-11/12 md:w-3/4 rounded-3xl variantfill-two my-10 p-10">
                 <p>
                     Правда или действие? (англ. Truth or Dare?) — игра для двух и более игроков. Особенно популярна среди детей и подростков.
