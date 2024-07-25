@@ -10,7 +10,7 @@ import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-function Game() {
+function GPTIdea() {
     const [temperature, setTemperature] = React.useState(0.5);
     const [prompt, setPrompt] = React.useState('');
     const [isDare, setIsDare] = React.useState(false);
@@ -30,12 +30,6 @@ function Game() {
         messages: [
         ]
     }
-
-    // const url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion";
-    // const headers = {
-    //     "Content-Type": "application/json",
-    //     "Authorization": "Api-Key AQVNxR6zGEOE6NwZxLzAg__WTaw2R788WOjcY1Dk"
-    // };
 
     const onSubmit = () => {
         console.log(temperature, prompt, isDare);
@@ -143,4 +137,4 @@ function Game() {
     );
 }
 
-export default Game;
+export default GPTIdea;

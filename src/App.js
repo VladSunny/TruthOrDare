@@ -8,10 +8,11 @@ import '@fontsource/roboto/700.css';
 import './styles/colors.css';
 
 import Welcome from './pages/Welcome';
-import Game from './pages/Game';
 import Information from './pages/Information';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import GPTIdea from './pages/GTPIdea';
+import Idea from './pages/Idea';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/Information" element={<Information />} />
-        <Route path="/Game" element={<Game />} />
+        <Route path="/Idea" element={<Idea />} />
+        <Route path="/GPTIdea" element={<GPTIdea />} />
       </Routes>
       <Footer />
     </Fragment>

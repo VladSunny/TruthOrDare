@@ -9,8 +9,8 @@ function Welcome() {
                 <h1 className='text-3xl md:text-5xl lg:text-6xl'>Добро пожаловать!</h1>
             </div>
             <div className='w-full h-full flex flex-col mt-14 items-center gap-10'>
-                <Link to="/Game" className="w-3/4 md:w-2/3 lg:w-3/5 h-1/4 md:h-2/5">
-                    <DefaultButton className="w-full h-full" href='/Game'>
+                <Link to="/Idea" className="w-3/4 md:w-2/3 lg:w-3/5 h-1/4 md:h-2/5">
+                    <DefaultButton className="w-full h-full">
                         <p className='text-6xl'>
                             Начать
                         </p>
