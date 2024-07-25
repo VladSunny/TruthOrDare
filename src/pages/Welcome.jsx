@@ -23,6 +23,13 @@ function Welcome() {
                         </p>
                     </DefaultButton>
                 </Link>
+                <Link to="/SignUp" className='w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3 flex justify-center items-center'>
+                    <DefaultButton className="w-full h-full">
+                        <p className='text-2xl md:text-4xl lg:text-5xl'>
+                            Зарегистрироваться
+                        </p>
+                    </DefaultButton>
+                </Link>
             </div>
         </div>
     );
