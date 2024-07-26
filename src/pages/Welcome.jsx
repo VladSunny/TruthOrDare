@@ -1,8 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import DefaultButton from '../UI/Button/DefaultButton';
 import { Link } from 'react-router-dom';
+import { supabase } from "../database/database";
 
 function Welcome() {
+    const [userInfo, setUserInfo] = React.useState(null);
+
+    useEffect(() => {
+        const fetch = async () => {
+            const {data: {user}} = await supabase.auth.getUser();
+            console.log(user);
+        };
+
+        fetch();
+    }, []);
+
     return (
         <div className="h-screen flex flex-col items-center font-sans variantfill-four">
             <div className="w-11/12 md:w-2/3 rounded-2xl mt-5 flex items-center justify-center py-20 md:py-10 variantfill-two shadow-lg" >
@@ -23,7 +35,7 @@ function Welcome() {
                         </p>
                     </DefaultButton>
                 </Link>
-                <Link to="/SignUp" className='w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3 flex justify-center items-center'>
+                <Link to="/SignIn" className='w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3 flex justify-center items-center'>
                     <DefaultButton className="w-full h-full">
                         <p className='text-2xl md:text-4xl lg:text-5xl'>
                             Войти

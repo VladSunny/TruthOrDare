@@ -5,7 +5,7 @@ import { supabase } from "../database/database";
 function SignIn() {
     const onClick = async () => {
 
-        let {data, error} = await supabase.auth.signInWithOAuth({
+        let {data} = await supabase.auth.signInWithOAuth({
             provider: 'google',
         })
 
