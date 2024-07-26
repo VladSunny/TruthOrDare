@@ -1,6 +1,6 @@
 import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React, {useEffect} from "react";
-import { getIdeas } from "../database/database";
+import { supabase } from "../database/database";
 
 function Idea() {
     const [isDare, setIsDare] = React.useState(false);
@@ -9,8 +9,8 @@ function Idea() {
 
     useEffect(() => {
         const fetchIdeas = async () => {
-            const ideas = await getIdeas();
-            setIdeas(ideas);
+            const { data } = await supabase.from("ideas").select("*").eq("accepted", true);
+            setIdeas(data);
         };
 
         fetchIdeas();
@@ -19,7 +19,6 @@ function Idea() {
     const getRandomIdea = () => {
         if (isDare) {
             const dares = ideas.filter(idea => idea.is_dare);
-            console.log(dares);
             return dares[Math.floor(Math.random() * dares.length)].idea;
         }
         else {

@@ -13,7 +13,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import GPTIdea from './pages/GTPIdea';
 import Idea from './pages/Idea';
-import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Route path="/Information" element={<Information />} />
         <Route path="/Idea" element={<Idea />} />
         <Route path="/GPTIdea" element={<GPTIdea />} />
-        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/SignIn" element={<SignIn />} />
       </Routes>
       <Footer />
     </Fragment>
