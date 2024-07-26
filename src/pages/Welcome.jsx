@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from "../database/database";
 
 function Welcome() {
-    const [userInfo, setUserInfo] = React.useState(null);
+    // const [userInfo, setUserInfo] = React.useState(null);
 
     useEffect(() => {
         const fetch = async () => {
