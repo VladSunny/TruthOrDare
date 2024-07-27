@@ -14,6 +14,7 @@ import Footer from './components/Footer/Footer';
 import GPTIdea from './pages/GTPIdea';
 import Idea from './pages/Idea';
 import SignIn from './pages/SignIn';
+import IdeasStudio from './pages/IdeasStudio';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/Idea" element={<Idea />} />
         <Route path="/GPTIdea" element={<GPTIdea />} />
         <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/IdeasStudio" element={<IdeasStudio />} />
       </Routes>
       <Footer />
     </Fragment>

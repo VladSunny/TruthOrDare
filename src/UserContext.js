@@ -10,6 +10,7 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [lastSubmissionTime, setLastSubmissionTime] = useState(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -37,7 +38,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading }}>
+    <UserContext.Provider value={{ user, loading, lastSubmissionTime, setLastSubmissionTime }}>
       {children}
     </UserContext.Provider>
   );
