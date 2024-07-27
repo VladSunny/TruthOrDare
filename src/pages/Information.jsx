@@ -1,6 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {supabase} from "../database/database";
 
 function Information() {
+    const [userInfo, setUserInfo] = React.useState(null);
+
+    useEffect(() => {
+        const fetch = async () => {
+            const {data: {user}} = await supabase.auth.getUser();
+            setUserInfo(user);
+        };
+
+        fetch();
+    }, []);
+
+    useEffect(() => {
+        if (userInfo) {
+            console.log(userInfo);
+        }
+    }, [userInfo]);
+
     return (
         <div className="w-fit h-fit variantfill-four flex flex-col items-center">
             <div className="w-11/12 md:w-3/4 rounded-3xl variantfill-two my-10 p-10">

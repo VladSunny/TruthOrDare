@@ -5,8 +5,11 @@ import { supabase } from "../database/database";
 function SignIn() {
     const onClick = async () => {
 
-        let {data} = await supabase.auth.signInWithOAuth({
+        let {data, error} = await supabase.auth.signInWithOAuth({
             provider: 'google',
+            options: {
+                redirectTo: 'http://localhost:3000/'
+            }
         })
 
         console.log(data);

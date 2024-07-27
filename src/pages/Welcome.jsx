@@ -4,21 +4,33 @@ import { Link } from 'react-router-dom';
 import { supabase } from "../database/database";
 
 function Welcome() {
-    // const [userInfo, setUserInfo] = React.useState(null);
+    const [userInfo, setUserInfo] = React.useState(null);
 
     useEffect(() => {
         const fetch = async () => {
             const {data: {user}} = await supabase.auth.getUser();
-            console.log(user);
+            setUserInfo(user);
         };
 
         fetch();
     }, []);
 
+    
+    useEffect(() => {
+        if (userInfo) {
+            console.log(userInfo);
+        }
+    }, [userInfo]);
+
     return (
         <div className="h-screen flex flex-col items-center font-sans variantfill-four">
             <div className="w-11/12 md:w-2/3 rounded-2xl mt-5 flex items-center justify-center py-20 md:py-10 variantfill-two shadow-lg" >
-                <h1 className='text-3xl md:text-5xl lg:text-6xl'>Добро пожаловать!</h1>
+                <h1 className='text-3xl md:text-5xl lg:text-6xl'>
+                    Добро пожаловать!
+                    {userInfo !== null && (
+                        userInfo.user_metadata.full_name
+                    )}
+                </h1>
             </div>
             <div className='w-full h-full flex flex-col mt-14 items-center gap-10'>
                 <Link to="/Idea" className="w-3/4 md:w-2/3 lg:w-3/5 h-1/4 md:h-2/5">
@@ -35,7 +47,7 @@ function Welcome() {
                         </p>
                     </DefaultButton>
                 </Link>
-                <Link to="/SignIn" className='w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3 flex justify-center items-center'>
+                <Link to="/SignIn" className='w-2/3 md:w-1/2 lg:w-2/5 h-1/5 md:h-1/3 flex justify-center items-center mb-5'>
                     <DefaultButton className="w-full h-full">
                         <p className='text-2xl md:text-4xl lg:text-5xl'>
                             Войти
