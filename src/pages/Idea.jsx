@@ -1,6 +1,7 @@
 import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React, {useEffect} from "react";
 import { supabase } from "../database/Database";
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Idea() {
     const [isDare, setIsDare] = React.useState(false);
@@ -36,8 +37,8 @@ function Idea() {
             </h1>
 
             <p className="flex justify-center text-1xl md:text-2xl lg:text-3xl w-11/12 md:w-2/3 variantfill-one p-5 rounded-2xl text-center mb-5">
-                В базе данных сайта собраны лучшие вопросы для комфортной игры в "Правда или действие".
-                Нажмите на кнопку ниже, и получите слуйчаный вопрос или действие из списка
+                В базе данных сайта собраны лучшие вопросы для комфортной игры в "правда или действие".
+                Нажмите на кнопку ниже и получите слуйчаный вопрос или действие из списка
             </p>
 
             <div>
@@ -50,9 +51,14 @@ function Idea() {
                     <FormControlLabel value="dare" control={<Radio />} label="Действие" />
                 </RadioGroup>
             </div>
-
+    
             <div className="my-5">
-                <Button color="success" variant='contained' size='large' onClick={() => setResult(getRandomIdea())}>получить идею</Button>
+                {ideas.length === 0 && (
+                    <CircularProgress />
+                )}
+                {ideas.length > 0 && (
+                    <Button color="success" variant='contained' size='large' onClick={() => setResult(getRandomIdea())}>получить идею</Button>
+                )}
             </div>
 
             <div className='variantfill-three rounded-3xl w-11/12 md:w-4/5 my-10 p-5 flex items-center justify-center flex-col'>
