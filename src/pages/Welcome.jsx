@@ -11,7 +11,7 @@ function Welcome() {
             <div className="w-11/12 md:w-2/3 rounded-2xl mt-5 flex items-center justify-center py-20 md:py-10 variantfill-two shadow-lg" >
                 <h1 className='text-3xl md:text-5xl lg:text-6xl'>
                     {user && (
-                        <div>Рады снова вас видеть!</div>
+                        <div className="text-center">Рады снова вас видеть!</div>
                     )}
                     {!user && (
                         <div>Добро пожаловать!</div>
