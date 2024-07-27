@@ -8,23 +8,24 @@ function IdeasStudio() {
     const { lastSubmissionTime, setLastSubmissionTime } = useUser();
     const [isDare, setIsDare] = React.useState(false);
     const [idea, setIdea] = React.useState('');
-    const [state, setState] = React.useState({
-        open: false,
-        vertical: 'top',
-        horizontal: 'center',
-        error: false,
-        text: "Предложение успешно отправленно!"
+    const [correctState, setCorrectState] = React.useState({
+        open: false
     });
-    const { vertical, horizontal, open } = state;
+    const [errorState, setErorState] = React.useState({
+        open: false,
+        text: ""
+    });
 
     const handleClick = (newState) => async () => {
         if (!idea) return;
 
         const currentTime = new Date().getTime();
-        const freezeDuration = 1 * 60 * 1000; // 1 minute in milliseconds
+        const freezeDuration = 2 * 60 * 1000; // 1 minute in milliseconds
 
-        if (lastSubmissionTime && currentTime - lastSubmissionTime < freezeDuration)
-            return;
+        if (lastSubmissionTime && currentTime - lastSubmissionTime < freezeDuration) {
+            setErorState({ ...errorState, open: true, text: "Подождите пару минут перед отправкой" });
+            return
+        }
         
         const { data, error } = await supabase.from("ideas").insert({
             idea: idea,
@@ -33,14 +34,22 @@ function IdeasStudio() {
 
         console.log(data, error);
 
-        if (error) return;
+        if (error) {
+            setErorState({ ...errorState, open: true, text: "Что-то пошло не так..." });
+            return;
+        }
 
         setLastSubmissionTime(currentTime);
-        setState({ ...newState, open: true });
+        setErorState({ ...errorState, open: false });
+        setCorrectState({ ...newState, open: true });
     };
 
-    const handleClose = () => {
-        setState({ ...state, open: false });
+    const handleCorrectClose = () => {
+        setCorrectState({ ...correctState, open: false });
+    };
+
+    const handleErrorClose = () => {
+        setErorState({ ...errorState, open: false });
     };
 
     return (
@@ -72,19 +81,36 @@ function IdeasStudio() {
                 <Button onClick={handleClick({ vertical: 'bottom', horizontal: 'center', error: false, text: "Предложение успешно отправленно!" })} color="success" variant='contained' size='large'>Отправить</Button>
             </div>
             <Snackbar
-                anchorOrigin={{ vertical, horizontal }}
-                open={open}
-                onClose={handleClose}
-                key={vertical + horizontal}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                open={correctState.open}
+                onClose={handleCorrectClose}
+                key={'correct'}
+                autoHideDuration={3000}
             >
                 <Alert
-                    onClose={handleClose}
+                    onClose={handleCorrectClose}
                     severity={'success'}
                     variant="filled"
                     sx={{ width: '100%' }}
-                    autoHideDuration={3000}
                 >
                     Предложение успешно отправленно
+                </Alert>
+            </Snackbar>
+
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                open={errorState.open}
+                onClose={handleErrorClose}
+                key={'error'}
+                autoHideDuration={5000}
+            >
+                <Alert
+                    onClose={handleErrorClose}
+                    severity={'error'}
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {errorState.text}
                 </Alert>
             </Snackbar>
         </div>
