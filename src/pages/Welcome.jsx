@@ -1,34 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import DefaultButton from '../UI/Button/DefaultButton';
 import { Link } from 'react-router-dom';
-import { supabase } from "../database/database";
+import { useUser } from '../UserContext';
 
 function Welcome() {
-    const [userInfo, setUserInfo] = React.useState(null);
-
-    useEffect(() => {
-        const fetch = async () => {
-            const {data: {user}} = await supabase.auth.getUser();
-            setUserInfo(user);
-        };
-
-        fetch();
-    }, []);
-
-    
-    useEffect(() => {
-        if (userInfo) {
-            console.log(userInfo);
-        }
-    }, [userInfo]);
+    const { user } = useUser();
 
     return (
         <div className="h-screen flex flex-col items-center font-sans variantfill-four">
             <div className="w-11/12 md:w-2/3 rounded-2xl mt-5 flex items-center justify-center py-20 md:py-10 variantfill-two shadow-lg" >
                 <h1 className='text-3xl md:text-5xl lg:text-6xl'>
                     Добро пожаловать!
-                    {userInfo !== null && (
-                        userInfo.user_metadata.full_name
+                    {user && (
+                        user.user_metadata.full_name
                     )}
                 </h1>
             </div>

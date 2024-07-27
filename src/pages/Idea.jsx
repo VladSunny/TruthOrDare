@@ -1,6 +1,6 @@
 import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React, {useEffect} from "react";
-import { supabase } from "../database/database";
+import { supabase } from "../database/Database";
 
 function Idea() {
     const [isDare, setIsDare] = React.useState(false);

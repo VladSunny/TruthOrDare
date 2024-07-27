@@ -1,16 +1,24 @@
 import React from "react";
 import { Button } from "@mui/material";
-import { supabase } from "../database/database";
+import { supabase } from "../database/Database";
 
 function SignIn() {
+    const redirectTo = process.env.REACT_APP_REDIRECT_URL;
+
     const onClick = async () => {
 
         let {data, error} = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: 'http://localhost:3000/'
+                redirectTo: redirectTo
             }
         })
+
+        if (data) {
+            localStorage.setItem('supabase.auth.token', JSON.stringify(data.session));
+        } else {
+            console.error('Error during sign-in:', error);
+        }
 
         console.log(data);
     }

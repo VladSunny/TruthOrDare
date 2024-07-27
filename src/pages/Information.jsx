@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {supabase} from "../database/database";
+import {supabase} from "../database/Database";
 
 function Information() {
     const [userInfo, setUserInfo] = React.useState(null);
