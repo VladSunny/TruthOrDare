@@ -1,6 +1,7 @@
 import React from "react";
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import { IconButton} from "@mui/material";
 import { useLocation, Link } from 'react-router-dom';
 import { useUser } from "../../UserContext";
@@ -44,6 +45,13 @@ function Header() {
                             </IconButton>
                         </div>
                     </div>
+                )}
+                {!user && location.pathname !== '/SignIn' && (
+                    <Link to="/SignIn" className="flex flex-row justify-center items-center gap-3">
+                        <IconButton sx={{padding: '0'}}>
+                            <LoginIcon sx={{fontSize: '2rem'}} />
+                        </IconButton>
+                    </Link>
                 )}
             </div>
         </div>
