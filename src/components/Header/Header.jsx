@@ -7,13 +7,14 @@ import { useUser } from "../../UserContext";
 
 function Header() {
     const { user } = useUser();
+    
     const location = useLocation();
 
     return (
         <div className="w-full h-20 flex items-center justify-between variantfill-five">
             <div className="flex flex-row">
                 {location.pathname !== '/' && (
-                    <div class="mx-5 md:mx-10">
+                    <div class="ml-5 md:ml-10">
                         <Link to="/">
                             <IconButton sx={{padding: '0'}}>
                                 <HomeIcon sx={{fontSize: '3rem'}} />
@@ -21,12 +22,12 @@ function Header() {
                         </Link>
                     </div>
                 )}
-                <p className="text-2xl md:text-4xl lg:text-5xl font-extrabold ml-5">Генератор правд и действий</p>
+                <p className="text-1xl md:text-4xl lg:text-5xl font-extrabold ml-3 md:ml-5">Генератор правд и действий</p>
             </div>
             <div className="mr-5 lg:mr-10 text-1xl md:text-2xl lg:text-3xl">
                 {user && (
                     <div className="flex flex-row justify-center items-center gap-3">
-                        <img src={user.user_metadata.picture} alt="Profile" width="64" height="64" />
+                        <img src={user.user_metadata.picture} alt="Profile" width="48" height="48" />
                         {user.user_metadata.full_name}
                     </div>
                 )}

@@ -17,6 +17,8 @@ function Idea() {
     }, []);
 
     const getRandomIdea = () => {
+        if (ideas.length === 0) return;
+
         if (isDare) {
             const dares = ideas.filter(idea => idea.is_dare);
             return dares[Math.floor(Math.random() * dares.length)].idea;
@@ -28,7 +30,7 @@ function Idea() {
     }
 
     return (
-        <div className='h-fit variantfill-four flex flex-col items-center'>
+        <div className='h-screen variantfill-four flex flex-col items-center'>
             <h1 className='text-3xl md:text-4xl lg:text-6xl w-11/12 md:w-2/3 py-10 variantfill-two p-5 my-5 rounded-2xl flex justify-center shadow-lg'>
                 Правда или действие?
             </h1>
@@ -53,7 +55,7 @@ function Idea() {
                 <Button color="success" variant='contained' size='large' onClick={() => setResult(getRandomIdea())}>получить идею</Button>
             </div>
 
-            <div className='variantfill-three rounded-3xl w-11/12 my-10 p-5 flex items-center justify-center flex-col'>
+            <div className='variantfill-three rounded-3xl w-11/12 md:w-4/5 my-10 p-5 flex items-center justify-center flex-col'>
                 {result}
             </div>
         </div>
