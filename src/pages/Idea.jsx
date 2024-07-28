@@ -61,7 +61,7 @@ function Idea() {
                 )}
             </div>
 
-            <div className='variantfill-three rounded-3xl w-11/12 md:w-4/5 my-10 p-5 flex items-center justify-center flex-col'>
+            <div className='rounded-3xl border-8 w-11/12 md:w-4/5 my-10 p-5 flex items-center justify-center flex-col'>
                 {result}
             </div>
         </div>

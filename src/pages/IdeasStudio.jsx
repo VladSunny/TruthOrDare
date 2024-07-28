@@ -20,10 +20,10 @@ function IdeasStudio() {
         if (!idea) return;
 
         const currentTime = new Date().getTime();
-        const freezeDuration = 2 * 60 * 1000; // 1 minute in milliseconds
+        const freezeDuration = 1 * 60 * 1000; // 1 minute in milliseconds
 
         if (lastSubmissionTime && currentTime - lastSubmissionTime < freezeDuration) {
-            setErorState({ ...errorState, open: true, text: "Подождите пару минут перед отправкой" });
+            setErorState({ ...errorState, open: true, text: "Секуд до возможности отправления идеи: " + (freezeDuration - (currentTime - lastSubmissionTime)) / 1000});
             return
         }
         
