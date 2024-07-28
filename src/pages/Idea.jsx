@@ -2,8 +2,12 @@ import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React, {useEffect} from "react";
 import { supabase } from "../database/Database";
 import CircularProgress from '@mui/material/CircularProgress';
+import DefaultButton from "../UI/Button/DefaultButton";
+import { Link } from "react-router-dom";
+import { useUser } from "../UserContext";
 
 function Idea() {
+    const { user } = useUser();
     const [isDare, setIsDare] = React.useState(false);
     const [result, setResult] = React.useState('');
     const [ideas, setIdeas] = React.useState([]);
@@ -37,7 +41,8 @@ function Idea() {
             </h1>
 
             <p className="flex justify-center text-1xl md:text-2xl lg:text-3xl w-11/12 md:w-2/3 variantfill-one p-5 rounded-2xl text-center mb-5">
-                В базе данных сайта собраны лучшие вопросы для комфортной игры в "правда или действие".
+                В базе данных сайта собраны лучшие вопросы для комфортной игры в "правда или действие", 
+                а также идеи пользователей.
                 Нажмите на кнопку ниже и получите слуйчаный вопрос или действие из списка
             </p>
 
@@ -64,6 +69,18 @@ function Idea() {
             <div className='rounded-3xl border-8 w-11/12 md:w-4/5 my-10 p-5 flex items-center justify-center flex-col'>
                 {result}
             </div>
+            
+            {user && (
+                <Link to="/IdeasStudio" className="w-fit h-fit mb-5">
+                    <DefaultButton size="large">Поделиться своей идеей</DefaultButton>
+                </Link>
+            )}
+
+            {!user && (
+                <Link to="/SignIn" className="w-fit h-fit mb-5">
+                    <DefaultButton size="large">Чтобы поделиться своей идеей, войдите в аккаунт</DefaultButton>
+                </Link>
+            )}
         </div>
     )
 }
