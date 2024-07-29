@@ -63,8 +63,6 @@ function Idea() {
     const rateHandler = async () => {
         if (!result || !user) return;
 
-        console.log(result);
-
         const { error: error1 } = await supabase
         .from('ideas')
         .update({ratings_sum: result.ratings_sum + rating, ratings_count: result.ratings_count + 1})
@@ -75,16 +73,19 @@ function Idea() {
             return;
         }
 
-        setRated([...rated, result.id]);
+        console.log(rated, result.id);
 
         const { error: error2} = await supabase
         .from('users')
         .update({
             rated: [
-                ...(rated || [])
+                ...(rated || []),
+                result.id
             ]
         })
         .eq('id', user.id);
+
+        setRated([...rated, result.id]);
 
         if (error2) {
             console.log(error2);
