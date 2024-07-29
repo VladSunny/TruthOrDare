@@ -1,16 +1,20 @@
-import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Button, FormControlLabel, IconButton, Radio, RadioGroup } from "@mui/material";
 import React, {useEffect} from "react";
 import { supabase } from "../database/Database";
 import CircularProgress from '@mui/material/CircularProgress';
 import DefaultButton from "../UI/Button/DefaultButton";
 import { Link } from "react-router-dom";
 import { useUser } from "../UserContext";
+import LabledRating from "../UI/Rating/LabledRating";
+import IosShareIcon from '@mui/icons-material/IosShare';
 
 function Idea() {
-    const { user } = useUser();
+    const { user, rated, setRated } = useUser();
     const [isDare, setIsDare] = React.useState(false);
-    const [result, setResult] = React.useState('');
+    const [result, setResult] = React.useState(null);
     const [ideas, setIdeas] = React.useState([]);
+    const [rating, setRating] = React.useState(2);
+    const [curRated, setCurRated] = React.useState(false);
 
     useEffect(() => {
         const fetchIdeas = async () => {
@@ -21,16 +25,70 @@ function Idea() {
         fetchIdeas();
     }, []);
 
+    useEffect(() => {
+        console.log(rating);
+    }, [rating])
+
+    useEffect(() => {
+        const fetchResult = async () => {
+            if (!result) return;
+
+            setCurRated(false);
+
+            for (let id of rated) {
+                if (id === result?.id) {
+                    setCurRated(true);
+                    break;
+                }
+            }
+        }
+
+        fetchResult();
+    }, [result, rated])
+    
+
     const getRandomIdea = () => {
-        if (ideas.length === 0) return;
+        if (ideas?.length === 0) return;
 
         if (isDare) {
             const dares = ideas.filter(idea => idea.is_dare);
-            return dares[Math.floor(Math.random() * dares.length)].idea;
+            return dares[Math.floor(Math.random() * dares.length)];
         }
         else {
             const truths = ideas.filter(idea => !idea.is_dare);
-            return truths[Math.floor(Math.random() * truths.length)].idea;
+            return truths[Math.floor(Math.random() * truths.length)];
+        }
+    }
+
+    const rateHandler = async () => {
+        if (!result || !user) return;
+
+        console.log(result);
+
+        const { error: error1 } = await supabase
+        .from('ideas')
+        .update({ratings_sum: result.ratings_sum + rating, ratings_count: result.ratings_count + 1})
+        .eq('id', result.id)
+
+        if (error1) {
+            console.log(error1);
+            return;
+        }
+
+        setRated([...rated, result.id]);
+
+        const { error: error2} = await supabase
+        .from('users')
+        .update({
+            rated: [
+                ...(rated || [])
+            ]
+        })
+        .eq('id', user.id);
+
+        if (error2) {
+            console.log(error2);
+            return;
         }
     }
 
@@ -58,22 +116,35 @@ function Idea() {
             </div>
     
             <div className="my-5">
-                {ideas.length === 0 && (
+                {ideas?.length === 0 && (
                     <CircularProgress />
                 )}
-                {ideas.length > 0 && (
+                {ideas?.length > 0 && (
                     <Button color="success" variant='contained' size='large' onClick={() => setResult(getRandomIdea())}>получить идею</Button>
                 )}
             </div>
 
             <div className='rounded-3xl border-8 w-11/12 md:w-4/5 my-10 p-5 flex items-center justify-center flex-col'>
-                {result}
+                {result?.idea}
             </div>
             
             {user && (
-                <Link to="/IdeasStudio" className="w-fit h-fit mb-5">
-                    <DefaultButton size="large">Поделиться своей идеей</DefaultButton>
-                </Link>
+                <div className="mb-10 flex flex-col justify-center items-center">
+                    {!curRated && result && (
+                        <div className="mb-10 w-fit flex flex-row justify-center items-center">
+                            <LabledRating onChange={(newRating) => {setRating(newRating)}}/>
+                            <div className="ml-5">
+                                <IconButton onClick={rateHandler}>
+                                    <IosShareIcon />
+                                </IconButton>
+                            </div>
+                        </div>
+                    )}
+
+                    <Link to="/IdeasStudio" className="w-fit h-fit">
+                        <DefaultButton size="large">Поделиться своей идеей</DefaultButton>
+                    </Link>
+                </div>
             )}
 
             {!user && (

@@ -11,6 +11,8 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lastSubmissionTime, setLastSubmissionTime] = useState(null);
+  const [saw, setSaw] = useState(null);
+  const [rated, setRated] = useState(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -23,7 +25,25 @@ export const UserProvider = ({ children }) => {
       setLoading(false);
     };
 
+    const fecthSawRated = async () => {
+      const {data: cur_user} = await supabase.auth.getUser();
+
+      if (!cur_user) {
+        console.error('Error fetching user:');
+        return;
+      }
+
+      const { data, error } = await supabase.from('users').select('saw, rated').eq('id', cur_user.user.id).single();
+      if (data) {
+        setSaw(data.saw);
+        setRated(data.rated);
+      } else if (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+
     getUser();
+    fecthSawRated();
 
     // Listen for auth state changes
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -38,7 +58,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading, lastSubmissionTime, setLastSubmissionTime }}>
+    <UserContext.Provider value={{ user, loading, lastSubmissionTime, setLastSubmissionTime, rated, saw, setSaw, setRated }}>
       {children}
     </UserContext.Provider>
   );
